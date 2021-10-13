@@ -1,19 +1,47 @@
-FROM python:3.10.0-slim-bullseye
+ARG VENV_PATH=/opt/venv
 
+
+FROM python:3.10.0-slim-bullseye as base
 WORKDIR /app
+
+# Set up venv
+ARG VENV_PATH
+RUN python3 -m venv "$VENV_PATH"
+ENV PATH="${VENV_PATH}/bin:${PATH}"
 
 # Install dependencies
 RUN python -m ensurepip --upgrade
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+
+FROM python:3.10.0-slim-bullseye as dev
+
+# Install dev dependencies
+RUN python -m ensurepip --upgrade
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+COPY requirements-dev.txt .
+RUN pip install -r requirements-dev.txt
+
+# Copy all other files
+COPY . .
+
+
+FROM python:3.10.0-slim-bullseye as runtime
+
 # Switch to non-root user
 RUN useradd --create-home appuser
 WORKDIR /home/appuser
 USER appuser
 
-# Copy application files
-COPY . .
+# Copy dependencies
+ARG VENV_PATH
+COPY --from=base "$VENV_PATH" "$VENV_PATH"
+ENV PATH="${VENV_PATH}/bin:${PATH}"
+
+# Copy application
+COPY app.py .
 
 # Run application
 CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]

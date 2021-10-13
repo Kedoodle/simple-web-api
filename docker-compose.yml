@@ -1,5 +1,11 @@
 services:
-  app:
+  
+  dev:
+    build:
+      context: .
+      target: dev
+  
+  local:
     build: .
     ports:
       - "5000:5000"
