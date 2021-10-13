@@ -17,7 +17,11 @@ RUN pip install -r requirements.txt
 
 FROM python:3.10.0-slim-bullseye as dev
 
-# Install dev dependencies
+# Install dev dependencies and tools
+RUN apt-get update && apt-get install --no-install-recommends -y \
+    git-all \
+    less \
+    openssh-client
 RUN python -m ensurepip --upgrade
 COPY requirements.txt .
 RUN pip install -r requirements.txt
