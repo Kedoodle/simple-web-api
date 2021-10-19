@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+echo "--- $0 --- running black"
+black --check --diff --color .
+
+echo "--- $0 --- running flake8"
+flake8 --show-source
