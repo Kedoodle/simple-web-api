@@ -1,10 +1,12 @@
 services:
-  
+
   dev:
     build:
       context: .
       target: dev
-  
+    volumes:
+      - .:/app
+
   local:
     build: .
     ports:
