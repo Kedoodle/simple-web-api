@@ -16,3 +16,8 @@ class AppTests(unittest.TestCase):
 
         self.assertEqual(b"hello world", response.data)
         self.assertEqual(HTTPStatus.OK, response.status_code)
+
+    def test_get_health_endpoint(self):
+        response = self.client.get("/health")
+
+        self.assertEqual(HTTPStatus.OK, response.status_code)
