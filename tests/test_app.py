@@ -1,12 +1,13 @@
-import unittest
+import os
 from http import HTTPStatus
+from unittest import TestCase, mock
 
 from flask.testing import FlaskClient
 
 from app import app
 
 
-class AppTests(unittest.TestCase):
+class AppTests(TestCase):
     def setUp(self):
         app.Testing = True
         self.client: FlaskClient = app.test_client()
@@ -20,4 +21,20 @@ class AppTests(unittest.TestCase):
     def test_get_health_endpoint(self):
         response = self.client.get("/health")
 
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+
+    @mock.patch.dict(
+        os.environ,
+        {
+            "VERSION": "fake_version",
+            "LAST_COMMIT_SHA": "fake_sha",
+        },
+    )
+    def test_get_metadata_endpoint(self):
+        response = self.client.get("/metadata")
+        json_data = response.get_json()
+
+        self.assertEqual("fake_version", json_data["version"])
+        self.assertIn("description", json_data)
+        self.assertEqual("fake_sha", json_data["lastcommitsha"])
         self.assertEqual(HTTPStatus.OK, response.status_code)
