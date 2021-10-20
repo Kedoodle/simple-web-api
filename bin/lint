@@ -7,13 +7,15 @@ functions_dir="$(dirname $0)/functions"
 
 if is_in_container; then
     echo "--- $0 --- running black"
-    black --check --diff --color .
+    black --check --diff --color .; black_exit=$?
 
     echo "--- $0 --- running flake8"
-    flake8 --show-source
+    flake8 --show-source; flake8_exit=$?
 
     echo "--- $0 --- running isort"
-    isort --check --diff --profile black .
+    isort --check --diff --profile black .; isort_exit=$?
+
+    ! (( $black_exit || $flake8_exit || $isort_exit ))
 else
     run_in_container
 fi
