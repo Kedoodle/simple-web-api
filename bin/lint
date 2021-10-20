@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
-echo "--- $0 --- running black"
-black --check --diff --color .
+if [[ $(grep -qs docker /proc/1/cgroup) ]]; then
+    echo "--- $0 --- running black"
+    black --check --diff --color .
 
-echo "--- $0 --- running flake8"
-flake8 --show-source
+    echo "--- $0 --- running flake8"
+    flake8 --show-source
+else
+    docker-compose build -q dev
+    docker-compose run --rm dev /app/bin/lint
+fi
