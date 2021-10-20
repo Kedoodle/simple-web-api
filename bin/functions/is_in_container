@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+is_in_container() {
+    grep -qs docker /proc/1/cgroup
+}

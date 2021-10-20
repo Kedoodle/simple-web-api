@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+run_in_container() {
+    script=$(basename "$0")
+    docker-compose build -q dev
+    docker-compose run --rm dev "/app/bin/$script"
+}

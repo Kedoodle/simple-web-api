@@ -6,11 +6,8 @@ functions_dir="$(dirname $0)/functions"
 . "$functions_dir/run_in_container"
 
 if is_in_container; then
-    echo "--- $0 --- running black"
-    black --check --diff --color .
-
-    echo "--- $0 --- running flake8"
-    flake8 --show-source
+    echo "--- $0 --- running unittest"
+    python -m unittest discover
 else
     run_in_container
 fi
