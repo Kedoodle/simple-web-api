@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -eu
+
+functions_dir="$(dirname $0)/functions"
+. "$functions_dir/is_in_container"
+. "$functions_dir/run_in_container"
+
+if is_in_container; then
+    echo "--- $0 --- running black"
+    black .
+
+    echo "--- $0 --- running isort"
+    isort --profile black .
+else
+    run_in_container
+fi
