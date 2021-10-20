@@ -18,8 +18,8 @@ def health():
 @app.route("/metadata")
 def metadata():
     metadata = {
-        "version": os.getenv("VERSION"),
+        "version": os.getenv("VERSION", "version not found"),
         "description": "a simple flask web api just for fun",
-        "lastcommitsha": os.getenv("LAST_COMMIT_SHA"),
+        "lastcommitsha": os.getenv("LAST_COMMIT_SHA", "last commit sha not found"),
     }
     return jsonify(metadata)
