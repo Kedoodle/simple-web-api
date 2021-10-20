@@ -7,7 +7,7 @@ functions_dir="$(dirname $0)/functions"
 
 if is_in_container; then
     echo "--- $0 --- running unittest"
-    python -m unittest discover
+    python -m unittest discover tests
 else
     run_in_container
 fi
