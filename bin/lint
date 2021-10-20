@@ -13,7 +13,7 @@ if is_in_container; then
     flake8 --show-source; flake8_exit=$?
 
     echo "--- $0 --- running isort"
-    isort --check --diff --profile black .; isort_exit=$?
+    isort --check --diff .; isort_exit=$?
 
     ! (( $black_exit || $flake8_exit || $isort_exit ))
 else

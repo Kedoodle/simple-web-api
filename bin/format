@@ -10,7 +10,7 @@ if is_in_container; then
     black .
 
     echo "--- $0 --- running isort"
-    isort --profile black .
+    isort .
 else
     run_in_container
 fi
