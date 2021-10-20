@@ -1,4 +1,5 @@
 black==21.9b0
 flake8==4.0.1
 icdiff==2.0.4
+isort==5.9.3
 pip-tools==6.4.0

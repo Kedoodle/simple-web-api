@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eu
+set -u
 
 functions_dir="$(dirname $0)/functions"
 . "$functions_dir/is_in_container"
@@ -11,6 +11,9 @@ if is_in_container; then
 
     echo "--- $0 --- running flake8"
     flake8 --show-source
+
+    echo "--- $0 --- running isort"
+    isort --check --diff --profile black .
 else
     run_in_container
 fi
