@@ -48,5 +48,11 @@ ENV PATH="${VENV_PATH}/bin:${PATH}"
 # Copy application
 COPY app.py .
 
+# Set runtime variables
+ARG VERSION
+ARG COMMIT_SHA
+ENV VERSION=$VERSION
+ENV COMMIT_SHA=$COMMIT_SHA
+
 # Run application
 CMD ["python", "-m", "flask", "run", "--host=0.0.0.0"]

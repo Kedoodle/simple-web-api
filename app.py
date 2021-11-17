@@ -20,6 +20,6 @@ def metadata():
     metadata = {
         "version": os.getenv("VERSION", "version not found"),
         "description": "a simple flask web api just for fun",
-        "lastcommitsha": os.getenv("LAST_COMMIT_SHA", "last commit sha not found"),
+        "lastcommitsha": os.getenv("COMMIT_SHA", "last commit sha not found"),
     }
     return jsonify(metadata)

@@ -27,7 +27,7 @@ class AppTests(TestCase):
         os.environ,
         {
             "VERSION": "fake_version",
-            "LAST_COMMIT_SHA": "fake_sha",
+            "COMMIT_SHA": "fake_sha",
         },
     )
     def test_get_metadata_endpoint(self):
@@ -42,7 +42,7 @@ class AppTests(TestCase):
     @mock.patch.dict(
         os.environ,
         {
-            "LAST_COMMIT_SHA": "fake_sha",
+            "COMMIT_SHA": "fake_sha",
         },
     )
     def test_get_metadata_endpoint_when_version_not_set(self):
@@ -57,7 +57,7 @@ class AppTests(TestCase):
             "VERSION": "fake_version",
         },
     )
-    def test_get_metadata_endpoint_when_last_commit_sha_not_set(self):
+    def test_get_metadata_endpoint_when_commit_sha_not_set(self):
         response = self.client.get("/metadata")
         json_data = response.get_json()
 
